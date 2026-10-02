@@ -1,0 +1,45 @@
+{
+  "name": "litecad",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "LiteCAD — a lightweight browser-based 2D CAD viewer for DWG and DXF drawings.",
+  "scripts": {
+    "sync:wasm": "node scripts/sync-wasm.mjs",
+    "predev": "npm run sync:wasm",
+    "dev": "vite",
+    "prebuild": "npm run sync:wasm",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "lint": "oxlint",
+    "typecheck": "tsc -b --noEmit false --emitDeclarationOnly false",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "pretest:e2e": "npm run sync:wasm",
+    "test:e2e": "playwright test",
+    "test:e2e:install": "playwright install chromium"
+  },
+  "dependencies": {
+    "@mlightcad/libredwg-web": "^0.7.14",
+    "dxf-parser": "^1.1.2",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "three": "^0.186.1",
+    "zustand": "^5.0.15"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@types/three": "^0.186.0",
+    "@vitejs/plugin-react": "^6.1.1",
+    "jsdom": "^29.1.1",
+    "oxlint": "^1.81.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "~6.0.2",
+    "vite": "^8.3.0",
+    "vitest": "^5.0.3"
+  }
+}

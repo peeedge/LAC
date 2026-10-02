@@ -1,0 +1,89 @@
+@import 'tailwindcss';
+
+/*
+ * LiteCAD theme.
+ *
+ * A dark, desaturated palette with a cool cast — close to the neutral greys of
+ * engineering software, and deliberately unlike a typical SaaS dashboard. Colours
+ * are exposed as Tailwind theme tokens so components use `bg-panel`, `text-ink`
+ * and so on rather than scattering hex values.
+ */
+@theme {
+  --color-viewport: #1b2129;
+
+  --color-shell: #10151a;
+  --color-panel: #171d24;
+  --color-panel-raised: #1e252e;
+  --color-edge: #2a333d;
+  --color-edge-strong: #39444f;
+
+  --color-ink: #dce3ea;
+  --color-ink-muted: #8d9aa8;
+  --color-ink-faint: #5f6b78;
+
+  --color-accent: #4da3ff;
+  --color-accent-dim: #2a6fb5;
+
+  --color-warn: #e0a85c;
+  --color-danger: #e06c6c;
+  --color-ok: #6fbf73;
+
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-shell);
+    color: var(--color-ink);
+    font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    /* A CAD workspace should never scroll as a document. */
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Numeric readouts are tabular so coordinates do not jitter as digits change. */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer components {
+  /* Thin, unobtrusive scrollbars for the side panels. */
+  .cad-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-edge-strong) transparent;
+  }
+
+  .cad-scroll::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  .cad-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .cad-scroll::-webkit-scrollbar-thumb {
+    background-color: var(--color-edge-strong);
+    border: 2px solid transparent;
+    border-radius: 9999px;
+    background-clip: content-box;
+  }
+
+  /* Visible keyboard focus everywhere, since the app is meant to be key-driven. */
+  .focus-ring {
+    outline: none;
+  }
+
+  .focus-ring:focus-visible {
+    outline: 1px solid var(--color-accent);
+    outline-offset: -1px;
+  }
+}
