@@ -21,10 +21,14 @@ export default defineConfig({
       name: 'chromium',
       use: {
         ...devices['Desktop Chrome'],
-        // WebGL in headless Chromium needs a software rasteriser to produce a
-        // real rendering context rather than silently failing.
+        // Use Chromium's current headless mode rather than the legacy shell.
+        channel: 'chromium',
         launchOptions: {
-          args: ['--enable-unsafe-swiftshader', '--use-gl=angle', '--use-angle=swiftshader'],
+          args: [
+            '--use-gl=angle',
+            '--use-angle=swiftshader-webgl',
+            '--enable-unsafe-swiftshader',
+          ],
         },
       },
     },

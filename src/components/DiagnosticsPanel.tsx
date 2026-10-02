@@ -18,11 +18,13 @@ const SEVERITY_STYLES: Record<CadDiagnostic['severity'], { color: string; label:
 };
 
 export function DiagnosticsPanel() {
-  const diagnostics = useCadStore((state) => state.summary?.diagnostics ?? []);
+  const diagnostics = useCadStore((state) => state.summary?.diagnostics);
   const open = useCadStore((state) => state.diagnosticsOpen);
   const toggle = useCadStore((state) => state.toggleDiagnostics);
 
   if (!open) return null;
+
+  const entries = diagnostics ?? [];
 
   return (
     <div className="flex h-44 shrink-0 flex-col border-t border-edge bg-panel">
@@ -31,7 +33,7 @@ export function DiagnosticsPanel() {
           Diagnostics
         </h2>
         <span className="tnum rounded bg-edge px-1 text-[10px] text-ink-muted">
-          {diagnostics.length}
+          {entries.length}
         </span>
         <button
           type="button"
@@ -44,11 +46,11 @@ export function DiagnosticsPanel() {
       </header>
 
       <div className="cad-scroll min-h-0 flex-1 overflow-y-auto font-mono text-[11px]">
-        {diagnostics.length === 0 ? (
+        {entries.length === 0 ? (
           <p className="px-3 py-3 text-ink-faint">No diagnostics for this drawing.</p>
         ) : (
           <ul>
-            {diagnostics.map((diagnostic, index) => {
+            {entries.map((diagnostic, index) => {
               const style = SEVERITY_STYLES[diagnostic.severity];
               return (
                 <li

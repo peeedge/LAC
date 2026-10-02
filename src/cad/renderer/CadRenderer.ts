@@ -501,8 +501,6 @@ export class CadRenderer {
 
     this.atlasTexture?.dispose();
     this.renderer.dispose();
-    // Release the WebGL context so repeated mounts do not exhaust the browser limit.
-    this.renderer.forceContextLoss();
   }
 
   /** Exposed for tests and for a future PNG export. */

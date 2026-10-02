@@ -14,7 +14,18 @@ grow into an editor.
 
 ## Install, run, build
 
-Requires Node 20.19+ (or 22+) and npm.
+Requires Node 20.19+ (or 22.12+) and npm.
+
+On Windows, the bootstrap script installs dependencies, starts the development
+server, and opens LiteCAD in the default browser:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\bootstrap.ps1
+```
+
+Use `.\bootstrap.ps1 -NoOpen`, `-Port 4173`, or `-SkipInstall` when needed.
+
+Or run the individual npm commands:
 
 ```bash
 npm install     # also copies the LibreDWG .wasm into public/wasm/
