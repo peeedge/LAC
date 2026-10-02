@@ -58,8 +58,7 @@ export const COMMANDS: readonly Command[] = [
   {
     id: 'file.saveAs',
     label: 'Save As…',
-    notImplemented: true,
-    note: 'LiteCAD is a viewer; writing DWG/DXF is not implemented yet.',
+    shortcut: { key: 's', mod: true, shift: true },
   },
   { id: 'view.zoomExtents', label: 'Zoom Extents', shortcut: { key: 'f' } },
   { id: 'view.zoomIn', label: 'Zoom In', shortcut: { key: '+' } },

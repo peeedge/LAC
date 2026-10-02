@@ -31,6 +31,7 @@ export default function App() {
   const [helpOpen, setHelpOpen] = useState(false);
 
   const openFile = useCadStore((state) => state.openFile);
+  const saveDrawing = useCadStore((state) => state.saveDrawing);
   const closeDrawing = useCadStore((state) => state.closeDrawing);
   const setTool = useCadStore((state) => state.setTool);
   const toggleGrid = useCadStore((state) => state.toggleGrid);
@@ -44,6 +45,7 @@ export default function App() {
 
   const handlers: CommandHandlers = {
     'file.open': requestOpen,
+    'file.saveAs': saveDrawing,
     'file.close': closeDrawing,
     'view.zoomExtents': () => viewportRef.current?.zoomExtents(),
     'view.zoomIn': () => viewportRef.current?.zoomBy(ZOOM_BUTTON_STEP),

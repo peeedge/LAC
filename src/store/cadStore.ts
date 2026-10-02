@@ -16,6 +16,7 @@ import type { CadLayer } from '../cad/model/document';
 import { createDocumentSource, type CadDocumentSource } from '../cad/documentSource';
 import { CadParseError, toCadParseError, type CadParseErrorDetails } from '../cad/parsers/errors';
 import type { ParseProgress } from '../cad/parsers/types';
+import { saveDrawingCopy } from '../cad/saveDrawing';
 import type { CadDocumentSummary, CadEntitySnapshot } from '../workers/protocol';
 import type { ViewportTool } from '../cad/interaction/ViewportController';
 
@@ -26,6 +27,8 @@ export interface CadState {
   status: LoadStatus;
   summary: CadDocumentSummary | null;
   geometry: GeometryBundle | null;
+  /** Original bytes retained for lossless Save As; not a serialised CAD model. */
+  sourceFile: File | null;
   error: CadParseErrorDetails | null;
   progress: ParseProgress | null;
 
@@ -53,6 +56,7 @@ export interface CadState {
 
   // --- Actions ---
   openFile(file: File): Promise<void>;
+  saveDrawing(): void;
   closeDrawing(): void;
   setLayerVisible(layerId: string, visible: boolean): void;
   setAllLayersVisible(visible: boolean): void;
@@ -93,6 +97,7 @@ export const useCadStore = create<CadState>((set, get) => ({
   status: 'idle',
   summary: null,
   geometry: null,
+  sourceFile: null,
   error: null,
   progress: null,
   layers: [],
@@ -115,6 +120,7 @@ export const useCadStore = create<CadState>((set, get) => ({
       progress: { stage: 'reading', message: 'Opening drawing…' },
       selection: [],
       inspected: null,
+      sourceFile: null,
     });
 
     try {
@@ -129,6 +135,7 @@ export const useCadStore = create<CadState>((set, get) => ({
         status: 'ready',
         summary,
         geometry,
+        sourceFile: file,
         // Copied so layer toggles never mutate the worker's summary object.
         layers: summary.layers.map((layer) => ({ ...layer })),
         progress: { stage: 'done', message: 'Ready' },
@@ -152,9 +159,15 @@ export const useCadStore = create<CadState>((set, get) => ({
         progress: null,
         summary: null,
         geometry: null,
+        sourceFile: null,
         layers: [],
       });
     }
+  },
+
+  saveDrawing() {
+    const file = get().sourceFile;
+    if (file) saveDrawingCopy(file);
   },
 
   closeDrawing() {
@@ -164,6 +177,7 @@ export const useCadStore = create<CadState>((set, get) => ({
       status: 'idle',
       summary: null,
       geometry: null,
+      sourceFile: null,
       layers: [],
       selection: [],
       inspected: null,

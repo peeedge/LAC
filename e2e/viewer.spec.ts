@@ -1,4 +1,5 @@
 import { expect, test, type Locator, type Page } from '@playwright/test';
+import { readFile } from 'node:fs/promises';
 import { normalize } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -74,4 +75,19 @@ test('renders entities into the WebGL canvas', async ({ page }) => {
   await expect
     .poll(async () => (await canvasFingerprint(canvas)).hash)
     .not.toBe(initial.hash);
+});
+
+test('downloads an unchanged copy of the opened drawing', async ({ page }) => {
+  await loadFixture(page);
+
+  const saveButton = page.getByTestId('toolbar-save');
+  await expect(saveButton).toBeEnabled();
+
+  const [download] = await Promise.all([
+    page.waitForEvent('download'),
+    saveButton.click(),
+  ]);
+
+  expect(download.suggestedFilename()).toBe('sample.dxf');
+  expect(await readFile(await download.path())).toEqual(await readFile(FIXTURE));
 });

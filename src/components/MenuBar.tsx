@@ -47,6 +47,7 @@ export function MenuBar({ handlers, onShowHelp }: MenuBarProps) {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const fileName = useCadStore((state) => state.summary?.metadata.fileName);
+  const canSave = useCadStore((state) => state.sourceFile !== null);
 
   // Close on outside click or Escape.
   useEffect(() => {
@@ -113,6 +114,7 @@ export function MenuBar({ handlers, onShowHelp }: MenuBarProps) {
                       key={item}
                       id={item}
                       handler={handlers[item]}
+                      disabled={item === 'file.saveAs' && !canSave}
                       onInvoke={() => setOpenMenu(null)}
                     />
                   ),
@@ -146,16 +148,18 @@ export function MenuBar({ handlers, onShowHelp }: MenuBarProps) {
 function MenuItem({
   id,
   handler,
+  disabled: explicitlyDisabled = false,
   onInvoke,
 }: {
   id: CommandId;
   handler?: () => void;
+  disabled?: boolean;
   onInvoke: () => void;
 }) {
   const command = COMMANDS_BY_ID.get(id);
   if (!command) return null;
 
-  const disabled = command.notImplemented || !handler;
+  const disabled = explicitlyDisabled || command.notImplemented || !handler;
 
   return (
     <button

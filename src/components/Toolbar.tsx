@@ -29,6 +29,7 @@ export function Toolbar({ handlers }: ToolbarProps) {
   const gridVisible = useCadStore((state) => state.gridVisible);
   const snapEnabled = useCadStore((state) => state.snapEnabled);
   const hasDrawing = useCadStore((state) => state.summary !== null);
+  const canSave = useCadStore((state) => state.sourceFile !== null);
 
   /** Pulls label, shortcut and not-implemented metadata from the registry. */
   const props = (id: Parameters<typeof COMMANDS_BY_ID.get>[0]) => {
@@ -49,7 +50,12 @@ export function Toolbar({ handlers }: ToolbarProps) {
       aria-label="Drawing tools"
     >
       <ToolButton {...props('file.open')} icon={<OpenIcon />} testId="toolbar-open" />
-      <ToolButton {...props('file.saveAs')} icon={<SaveIcon />} testId="toolbar-save" />
+      <ToolButton
+        {...props('file.saveAs')}
+        icon={<SaveIcon />}
+        disabled={!canSave}
+        testId="toolbar-save"
+      />
 
       <ToolbarSeparator />
 

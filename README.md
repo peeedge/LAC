@@ -7,8 +7,8 @@ viewport with pan/zoom, layer control, entity selection and a property inspector
 It is not a clone of AutoCAD — it is a clean MVP with an architecture meant to
 grow into an editor.
 
-> **Status: initial MVP.** Viewing works end to end. Editing, drawing commands and
-> file export are not implemented; see [Known limitations](#known-limitations).
+> **Status: initial MVP.** Viewing works end to end. Editing and drawing commands
+> are not implemented; see [Known limitations](#known-limitations).
 
 ---
 
@@ -294,8 +294,10 @@ files.
 
 ## Known limitations
 
-- **Read-only.** No drawing, editing, or saving. `Save As` is a visible
-  placeholder.
+- **Read-only.** No drawing or editing. `Save As` downloads a byte-for-byte copy
+  of the opened DWG/DXF; view state such as hidden layers is not written into it.
+- **No DWG writer.** LibreDWG's web build can read DWG but cannot serialise a
+  modified DWG database.
 - **Model space only.** Paper-space layouts are skipped.
 - **2D only.** Z coordinates are preserved in the model but ignored when drawing.
 - **No `HATCH`, `DIMENSION`, `LEADER`, or 3D solids.** They appear in diagnostics.
