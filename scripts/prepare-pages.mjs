@@ -1,6 +1,7 @@
 /**
- * Copies the Vite production build into docs/ so GitHub Pages can serve it
- * from the main branch (Settings → Pages → Deploy from a branch → /docs).
+ * Copies the Vite production build into docs/ and adds .nojekyll.
+ * `npm run deploy` then publishes that folder to the gh-pages branch
+ * (Settings → Pages → Deploy from a branch → gh-pages / (root)).
  */
 import { cp, rm, stat, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
@@ -28,7 +29,7 @@ async function main() {
   await rm(docsDir, { recursive: true, force: true });
   await cp(distDir, docsDir, { recursive: true });
   await writeFile(join(docsDir, '.nojekyll'), '');
-  console.log('[prepare-pages] wrote docs/ for GitHub Pages (branch: main, folder: /docs).');
+  console.log('[prepare-pages] wrote docs/ for the gh-pages branch.');
 }
 
 main().catch((error) => {
