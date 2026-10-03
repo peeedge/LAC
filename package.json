@@ -18,7 +18,8 @@
     "test:watch": "vitest",
     "pretest:e2e": "npm run sync:wasm",
     "test:e2e": "playwright test",
-    "test:e2e:install": "playwright install chromium"
+    "test:e2e:install": "playwright install chromium",
+    "stop": "powershell -NoLogo -NoProfile -ExecutionPolicy Bypass -File ./stop-lingering.ps1"
   },
   "dependencies": {
     "@mlightcad/libredwg-web": "^0.7.14",
