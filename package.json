@@ -11,6 +11,7 @@
     "prebuild": "npm run sync:wasm",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
+    "deploy": "npm run build && node scripts/prepare-pages.mjs",
     "lint": "oxlint",
     "typecheck": "tsc -b",
     "test": "vitest run",
