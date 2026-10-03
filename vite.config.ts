@@ -3,7 +3,12 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { fileURLToPath } from 'node:url';
 
+// Project Pages live at https://<user>.github.io/LAC/. Local `vite` / Playwright
+// keep the default `/` unless VITE_BASE is set (the deploy workflow sets /LAC/).
+const base = process.env.VITE_BASE ?? '/';
+
 export default defineConfig({
+  base,
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
