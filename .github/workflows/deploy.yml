@@ -36,8 +36,6 @@ jobs:
 
       - name: Build
         run: npm run build
-        env:
-          VITE_BASE: /LAC/
 
       - name: Disable Jekyll
         run: touch dist/.nojekyll
