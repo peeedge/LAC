@@ -1,0 +1,22 @@
+﻿# Build output
+dist/
+dist-ssr/
+
+# Dependencies
+node_modules/
+
+# Generated: copied from node_modules by scripts/sync-wasm.mjs
+public/wasm/
+
+# Test artefacts
+test-results/
+playwright-report/
+blob-report/
+coverage/
+
+# Editor / OS
+.DS_Store
+.idea/
+*.local
+*.log
+npm-debug.log*
